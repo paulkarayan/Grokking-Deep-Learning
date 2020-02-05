@@ -1,0 +1,28 @@
+mkvirtualenv gdl
+
+workon gdl
+
+## lets annotate chapter 4
+
+# starting "knob" weight
+weight = 0.5
+# this is the value we want to predict
+goal_pred = 0.8
+# here's the starting point
+input = 2
+# this factor is used to dampen the weight update.
+# determined somewhat empirically
+alpha = 0.1
+
+# we're going to iterate our way into getting the error to 0
+# this is gradient descent... if range is much larger, it'll just oscillate
+for iteration in range(20):
+    pred  = input * weight
+    # take the squared error of our prediction
+    error = (pred - goal_pred) ** 2
+    # compute the rate of change. this lets us know if we're far or close
+    derivative = input * (pred - goal_pred)
+    # dampen the weight change. this is because we don't want to overshoot
+    weight = weight - (alpha * derivative)
+    
+    print("Error:" + str(error) + " Prediction:" + str(pred))
